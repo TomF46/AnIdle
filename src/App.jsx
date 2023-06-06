@@ -1,25 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { updateMoney } from "./redux/actions/inventoryActions"
+function App({money, updateMoney}) {
 
-function App() {
-  const [count, setCount] = useState(0)
+  function addMoney(){
+    updateMoney(money + 1);
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+      <h1 className='text-primary text-4xl'>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button onClick={() => addMoney()}>
+          count is {money}
         </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
@@ -32,4 +25,19 @@ function App() {
   )
 }
 
-export default App
+App.propTypes = {
+  money: PropTypes.number.isRequired,
+  updateMoney: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => {
+  return {
+    money: state.inventory.money
+  }
+}
+
+const mapDispatchToProps = {
+  updateMoney
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

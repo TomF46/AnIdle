@@ -1,3 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -12,6 +18,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --primary-color: #2E86AB;
+  --background-color: #191818;
+  --backgroundOffset-color: #201E1F;
+  --backgroundOffset2-color: #2d2a2c;
+  --success-color: #A5C882;
+  --rating-color: #F7DD72;
 }
 
 a {
