@@ -5,7 +5,7 @@ export function updateMoneyAction(value) {
 }
 
 export function updateInventoryAction(item) {
-    return { type: types.UPDATE_INVENTORY, item };
+    return { type: types.UPDATE_INVENTORY, item};
 }
 
 export function updateMoney(newValue) {
