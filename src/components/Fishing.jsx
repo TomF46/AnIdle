@@ -36,7 +36,8 @@ function Fishing({ inventory, updateInventory, addItemToLog}) {
     }
 
     return (
-        <>
+        <div className="bg-backgroundOffset p-4 shadow">
+            <h2 className="text-center text-primary text-2xl mb-2 font-bold">Fishing</h2>
             <div className="card">
                 <TaskProgressBar taskInProgress={fishingTaskInProgress} taskRunningTime={5000} onTaskFinished={checkAndStoreCatch} />
                 <button className="bg-primary text-white rounded py-2 px-4 mt-4 hover:opacity-75" onClick={() => fish()}>Fish</button>
@@ -51,7 +52,7 @@ function Fishing({ inventory, updateInventory, addItemToLog}) {
                     )}
                 </ul>
             </div>
-        </>
+        </div>
     );
 }
 
