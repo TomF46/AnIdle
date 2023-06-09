@@ -5,9 +5,11 @@ import { updateInventory } from "../redux/actions/inventoryActions";
 import { ItemTypes } from "../Data/itemTypes";
 import { Fish } from "../Data/fish";
 import { wrapForInventory } from "../tools/inventoryService";
+import TaskProgressBar from "./Tasks/TaskProgressBar";
 
 function Fishing({ inventory, updateInventory }) {
     const [fishStocks, setFishStocks] = useState([]);
+    const [fishingTaskInProgress, setFishingTaskInProgress] = useState(false);
 
     useEffect(() => {
         var stocks = inventory.filter(item => item.type == ItemTypes.Fish);
@@ -15,6 +17,11 @@ function Fishing({ inventory, updateInventory }) {
     }, [inventory]);
 
     function fish() {
+        setFishingTaskInProgress(true);
+    }
+
+    function checkAndStoreCatch(){
+        setFishingTaskInProgress(false);
         var fish = Fish[0]; // Get first fish for now
         var currentFishStock = fishStocks.find(item => item.id == fish.itemId);
         if(currentFishStock == null){
@@ -28,7 +35,8 @@ function Fishing({ inventory, updateInventory }) {
     return (
         <>
             <div className="card">
-                <button onClick={() => fish()}>Fish</button>
+                <TaskProgressBar taskInProgress={fishingTaskInProgress} taskRunningTime={5000} onTaskFinished={checkAndStoreCatch} />
+                <button className="mt-8" onClick={() => fish()}>Fish</button>
             </div>
             <div>
                 <h2 className="text-primary">Fish stocks</h2>
