@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateInventory } from "../redux/actions/inventoryActions";
+import { addItemToLog } from "../redux/actions/logActions";
 import { ItemTypes } from "../Data/itemTypes";
 import { Fish } from "../Data/fish";
 import { wrapForInventory } from "../tools/inventoryService";
 import TaskProgressBar from "./Tasks/TaskProgressBar";
 
-function Fishing({ inventory, updateInventory }) {
+function Fishing({ inventory, updateInventory, addItemToLog}) {
     const [fishStocks, setFishStocks] = useState([]);
     const [fishingTaskInProgress, setFishingTaskInProgress] = useState(false);
 
@@ -22,8 +23,10 @@ function Fishing({ inventory, updateInventory }) {
 
     function checkAndStoreCatch(){
         setFishingTaskInProgress(false);
-        var fish = Fish[0]; // Get first fish for now
-        var currentFishStock = fishStocks.find(item => item.id == fish.itemId);
+        let fish = Fish[0]; // Get first fish for now
+        let amount = 1;
+        let currentFishStock = fishStocks.find(item => item.id == fish.itemId);
+        addItemToLog(`Caught ${amount} ${fish.name}`);
         if(currentFishStock == null){
             updateInventory(wrapForInventory(fish, 1));
         } else {
@@ -36,7 +39,7 @@ function Fishing({ inventory, updateInventory }) {
         <>
             <div className="card">
                 <TaskProgressBar taskInProgress={fishingTaskInProgress} taskRunningTime={5000} onTaskFinished={checkAndStoreCatch} />
-                <button className="mt-8" onClick={() => fish()}>Fish</button>
+                <button className="bg-primary text-white rounded py-2 px-4 mt-4 hover:opacity-75" onClick={() => fish()}>Fish</button>
             </div>
             <div>
                 <h2 className="text-primary">Fish stocks</h2>
@@ -55,6 +58,7 @@ function Fishing({ inventory, updateInventory }) {
 Fishing.propTypes = {
     inventory: PropTypes.array.isRequired,
     updateInventory: PropTypes.func.isRequired,
+    addItemToLog: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -65,6 +69,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     updateInventory,
+    addItemToLog
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Fishing);

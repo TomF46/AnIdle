@@ -1,5 +1,6 @@
 import inventory from "./inventory";
 
 export default {
-    inventory: inventory
+    inventory: inventory,
+    log: []
 };

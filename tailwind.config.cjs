@@ -14,6 +14,9 @@ export default {
         'success' : 'var(--success-color)',
         'rating' : 'var(--rating-color)',
       },
+      minHeight: {
+        '1/2': '40vh',
+      }
     },
   },
   plugins: [],
