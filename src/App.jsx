@@ -1,5 +1,6 @@
 import Fishing from "./components/Fishing";
 import Log from "./components/Log/Log";
+import Player from "./components/Player/Player";
 
 function App() {
 
@@ -11,7 +12,14 @@ function App() {
             <Fishing />
           </div>
           <div className="col-span-4 p-8">
-            <Log />
+            <div className="grid grid-cols-12">
+              <div className="col-span-12">
+                <Player />
+              </div>
+              <div className="col-span-12 mt-4">
+                <Log />
+              </div>
+            </div>
           </div>
         </div>
       </div>

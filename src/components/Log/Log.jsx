@@ -10,7 +10,7 @@ function Log({log, clearLog}) {
     }
 
     return (
-        <div className="bg-backgroundOffset p-4 shadow min-h-1/2">
+        <div className="bg-backgroundOffset p-4 shadow min-h-40vh">
             <h2 className="text-center text-primary text-2xl font-bold">Logs</h2>
             <ul>
                 {log.map((item, i) => {

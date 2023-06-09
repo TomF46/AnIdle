@@ -15,7 +15,8 @@ export default {
         'rating' : 'var(--rating-color)',
       },
       minHeight: {
-        '1/2': '40vh',
+        '20vh': '20vh',
+        '40vh': '40vh',
       }
     },
   },
