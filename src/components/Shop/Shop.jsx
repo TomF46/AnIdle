@@ -6,20 +6,21 @@ import { Items } from "../../Data/items";
 
 function Shop({inventory, updateMoney, updateInventory}) {
 
-    function sell(item){
-        removeItem(item);
-        recieveMoney(item)
+    function sell(item, sellAll){
+        recieveMoney(item, sellAll);
+        removeItem(item, sellAll);
     }
 
-    function removeItem(item){
+    function removeItem(item, sellAll){
         let saleItem = { ...item};
-        saleItem.quantity--;
+        sellAll ? saleItem.quantity-= saleItem.quantity : saleItem.quantity--;
         updateInventory(saleItem)
     }
 
-    function recieveMoney(item){
+    function recieveMoney(item, sellAll){
         var itemData = Items.find(x => x.id == item.id);
-        updateMoney(inventory.money + itemData.price)
+        let income = sellAll ? itemData.price * item.quantity : itemData.price;
+        updateMoney(inventory.money + income )
     }
 
     function isItemForSale(item){
@@ -41,7 +42,10 @@ function Shop({inventory, updateMoney, updateInventory}) {
                     return (
                         <div key={item.id}>
                             {item.quantity > 0 && isItemForSale(item) && (
-                                <p>{item.name} : {item.quantity} at {getPrice(item)} gold  <button className="bg-primary text-white rounded py-2 px-4 mt-4 hover:opacity-75" onClick={() => sell(item)}>Sell</button></p>
+                                <p>{item.name} : {item.quantity} at {getPrice(item)} gold
+                                    <button className="bg-primary text-white rounded py-2 px-4 mt-4 hover:opacity-75 ml-2" onClick={() => sell(item, false)}>Sell 1</button>
+                                    <button className="bg-primary text-white rounded py-2 px-4 mt-4 hover:opacity-75 ml-2" onClick={() => sell(item, true)}>Sell All</button>
+                                </p>
                             )}
                         </div>
                     )}
