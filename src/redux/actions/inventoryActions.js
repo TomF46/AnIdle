@@ -1,3 +1,4 @@
+import { saveData } from "../../tools/localStorage";
 import * as types from "./actionTypes";
 
 export function updateMoneyAction(value) {
@@ -11,11 +12,13 @@ export function updateInventoryAction(item) {
 export function updateMoney(newValue) {
     return function (dispatch) {
         dispatch(updateMoneyAction(newValue));
+        saveData();
     };
 }
 
 export function updateInventory(item) {
     return function (dispatch) {
         dispatch(updateInventoryAction(item));
+        saveData();
     };
 }

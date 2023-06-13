@@ -1,3 +1,4 @@
+import { saveData } from "../../tools/localStorage";
 import * as types from "./actionTypes";
 
 export function AddItemToLogAction(item) {
@@ -12,11 +13,13 @@ export function addItemToLog(message) {
     return function (dispatch) {
         var item = {message: message, dateTime: Date.now()}
         dispatch(AddItemToLogAction(item));
+        saveData();
     };
 }
 
 export function clearLog() {
     return function (dispatch) {
         dispatch(ClearLogAction());
+        saveData();
     };
 }

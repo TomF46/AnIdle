@@ -1,12 +1,7 @@
-import initialState from "../redux/state/initialState";
+import store from "../redux/store";
 
-export const loadState = () => {
-    const saveData = localStorage.getItem("saveData");
-    let state = saveData == null ? initialState : JSON.parse(saveData);
-    return state;
-};
-
-export const saveData = data => {
+export const saveData = () => {
+    let data = store.getState();
     try {
         const serializedState = JSON.stringify(data);
         localStorage.setItem("saveData", serializedState);
