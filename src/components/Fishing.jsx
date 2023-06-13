@@ -28,9 +28,9 @@ function Fishing({ inventory, updateInventory, addItemToLog}) {
         let currentFishStock = fishStocks.find(item => item.id == fish.itemId);
         addItemToLog(`Caught ${amount} ${fish.name}`);
         if(currentFishStock == null){
-            updateInventory(wrapForInventory(fish, 1));
+            updateInventory(wrapForInventory(fish, amount));
         } else {
-            let newAmount = currentFishStock.quantity + 1;
+            let newAmount = currentFishStock.quantity + amount;
             updateInventory(wrapForInventory(fish, newAmount));
         }
     }
