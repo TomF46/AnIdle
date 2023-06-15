@@ -7,15 +7,28 @@ import { ItemTypes } from "../Data/itemTypes";
 import { Fish } from "../Data/fish";
 import { wrapForInventory } from "../tools/inventoryService";
 import TaskProgressBar from "./Tasks/TaskProgressBar";
+import { defaultRod } from "../Data/defaults";
+import { Rods } from "../Data/rods";
 
-function Fishing({ inventory, updateInventory, addItemToLog}) {
+function Fishing({ inventory, updateInventory, addItemToLog, rod}) {
     const [fishStocks, setFishStocks] = useState([]);
     const [fishingTaskInProgress, setFishingTaskInProgress] = useState(false);
+    const [rodStats, setRodStats] = useState(defaultRod);
+
 
     useEffect(() => {
         var stocks = inventory.filter(item => item.type == ItemTypes.Fish);
         setFishStocks(stocks)
     }, [inventory]);
+
+    useEffect(() => {
+        if(rod == null){
+            setRodStats(defaultRod);
+        } else {
+            var stats = Rods.find(x => x.itemId == rod.id);
+            setRodStats(stats);
+        }
+    }, [rod]);
 
     function fish() {
         setFishingTaskInProgress(true);
@@ -24,7 +37,7 @@ function Fishing({ inventory, updateInventory, addItemToLog}) {
     function checkAndStoreCatch(){
         setFishingTaskInProgress(false);
         let fish = Fish[0]; // Get first fish for now
-        let amount = 1;
+        let amount = rodStats.power;
         let currentFishStock = fishStocks.find(item => item.id == fish.itemId);
         addItemToLog(`Caught ${amount} ${fish.name}`);
         if(currentFishStock == null){
@@ -41,6 +54,7 @@ function Fishing({ inventory, updateInventory, addItemToLog}) {
             <div className="card">
                 <TaskProgressBar taskInProgress={fishingTaskInProgress} taskRunningTime={5000} onTaskFinished={checkAndStoreCatch} />
                 <button className="bg-primary text-white rounded py-2 px-4 mt-4 hover:opacity-75" onClick={() => fish()}>Fish</button>
+                <p>Using {rodStats.name} {`(${rodStats.power} power)`}</p>
             </div>
             <div>
                 <h2 className="text-primary">Fish stocks</h2>
@@ -60,11 +74,13 @@ Fishing.propTypes = {
     inventory: PropTypes.array.isRequired,
     updateInventory: PropTypes.func.isRequired,
     addItemToLog: PropTypes.func.isRequired,
+    rod: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
     return {
         inventory: state.inventory.items,
+        rod: state.equippedItems.rod
     };
 };
 
