@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import InventoryReducer from './reducers/inventoryReducer';
 import LogReducer from './reducers/logReducer';
 import initialState from './state/initialState';
+import equippedItemsReducer from './reducers/equippedItemsReducer';
 
 
 const loadState = () => {
@@ -15,7 +16,8 @@ let savedState = loadState();
 export default configureStore({
   reducer: {
     inventory: InventoryReducer,
-    log: LogReducer
+    log: LogReducer,
+    equippedItems: equippedItemsReducer
   },
   preloadedState: savedState
 })

@@ -6,6 +6,7 @@ export function wrapForInventory(item, quantity){
         id: item.itemId,
         name: item.name,
         type: parent.type,
-        quantity: quantity
+        quantity: quantity,
+        equippable: parent.equippable
     };
 }
